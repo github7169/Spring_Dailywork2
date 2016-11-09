@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 하나만 만들어지는게 singleton, 매번 생기는게 prototype -->	
+	<bean id="dto" class="com.cjon.bank.dto.BankDTO" scope="prototype"></bean>
+			
+	<bean id="template" class="com.cjon.bank.util.DBTemplate" scope="prototype"></bean>
+		
+	<!-- 필드값이 있다고 해서 무조건 선언하는 것은 아님, 새로 객체를 생성할 경우에만! 지금은 service에서 생성한걸 그대로 쓰기 때문 -->
+	<bean id="dao" class="com.cjon.bank.dao.BankDAO">
+	</bean>
+		
+	<bean id="service" class="com.cjon.bank.service.BankService" scope="prototype">
+		<property name="template">
+			<ref bean="template" />
+		</property>
+		<property name="dao">
+			<ref bean="dao" />
+		</property>
+	</bean>
+
+</beans>
